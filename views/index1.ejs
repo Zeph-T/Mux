@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <title>Electronics</title>
+    <style>
+        input,
+        select {
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input {
+            width: 100%;
+            background-color: rgb(224, 195, 32);
+            color: white;
+            padding: 10px 5px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            align-items: center;
+            cursor: pointer;
+            font-size: 25px;
+        }
+
+        input[type=submit] {
+            width: 25vw;
+            background: darkblue;
+            text-align: center;
+            align-items: center;
+        }
+
+        input[type=submit]:hover {
+            background-color: #ccc;
+        }
+
+        label {
+            font-size: 30px;
+        }
+
+        .container {
+            width: 40vw;
+            margin: auto;
+
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .update_container {
+            margin-left: 75vw;
+            width: 20vw;
+            background-color: red;
+            padding: 20px;
+        }
+
+        .drop-button {
+            padding: 10px 20px;
+            margin: 10px;
+            display: inline-block;
+            background: #f3c91c;
+            color: black;
+            font-weight: bold;
+            border: solid 1px #333;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        li a {
+            display: block;
+            text-decoration: none;
+            color: white;
+            background: gray;
+            padding: 10px;
+            width: 100px;
+            border: solid 1px black;
+        }
+
+        .drop-button:hover {
+            background: #f91;
+            cursor: pointer;
+        }
+
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            display: none;
+            z-index: 4;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .update {
+            background-color: aqua;
+            border: 4px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 60px;
+        }
+
+        p:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="https://github.com/Zeph-T/Mux"> <i class="fa fa-github fa-3x"> Github Repository </i> </a>
+    <marquee>Since this is just a Working Model , I haven't used any frontend-Framwork. The only Tech I used for frontend is EJS templating Engine       NOTE:Added an extra functionality to update the User Information.
+    </marquee>
+    <a style="color:white;" href="/electronicusers">
+        <p style="background-color: rosybrown;padding:20px;font-size: 20px;color:honeydew"> Press to Get
+            all the
+            Registered Users </p>
+    </a>
+    <h1 style="margin-bottom: 70px; text-align: center;font-size: 100px;">ELECTRONICS</h1>
+
+
+
+    <div class="container">
+        <div class="dropdown">
+            <button class="drop-button">Select the Form </button>
+            <div class="dropdown-content">
+                <li> <a href="/toys" selected>Toys </a></li>
+                <li> <a href="/electronics">Electronics </a></li>
+            </div>
+        </div>
+        <form action="/electronics" method="post">
+            <%fields.forEach((field)=>{ %>
+                <label for="fname" style="margin-right: 30px;">
+                    <%= field.name %>
+                </label>
+                <input type="<%=field.type %>" name="<%= field.name %>">
+                <br>
+                <% }) %>
+                    <% if(fields.length!==0) {%>
+                        <input type="submit" value="Submit">
+                        <% } %>
+        </form>
+        <h2>Add a New Field?</h3>
+
+            <form action="/electronics/newfield" method="post"
+                style="margin-bottom: 30px;background: gold;padding:30px;border-radius: 4px;border:3px solid black">
+                <label style="font-size: 30px;" for="">Field Name</label>
+                <input style="font-size: 20px;background-color:white;color:black" type="text" name="name"
+                    placeholder="Enter the name of your new Custom Field">
+                <label for="">Field Type</label>
+                <input style="background-color: white; color:black" list="browsers" name="type"
+                    placeholder="Select the Type">
+                <datalist id="browsers">
+                    <option value="button">
+                    <option value="checkbox">
+                    <option value="color">
+                    <option value="date">
+                    <option value="datetime-local">
+                    <option value="email">
+                    <option value="file">
+                    <option value="image">
+                    <option value="month">
+                    <option value="password">
+                    <option value="radio">
+                    <option value="number">
+                    <option value="search">
+                    <option value="text">
+                    <option value="time">
+                    <option value="url">
+                    <option value="week">
+                    <option value="textarea">
+                </datalist>
+                <input type="submit" value="Add the Field">
+            </form>
+            <% if(fields.length !==0){ %>
+                <h2>Delete a Field?</h2>
+                <form action="/electronics/delete"
+                    style="margin-bottom: 100px;background-color:peru; padding:20px;border:4px solid black;border-radius: 4px;"
+                    method="post">
+                    <label style="background-color: none;" for="">Enter The Name of the Field you want to delete</label>
+                    <input style="padding:10px" style="background-color:white;" list="items" name="name"
+                        placeholder="Select the Field Name to Delete">
+                    <datalist id="items">
+                        <% for(var i=0;i<fields.length;i++){%>
+                            <% if(fields[i].name !=="Username" ){ %>
+                                <option value="<%= fields[i].name %>">
+                                    <% } %>
+                                        <% } %>
+                    </datalist>
+
+
+                    <input type="submit" style="background-color:orangered; padding:5px;" value="Delete">
+
+                </form>
+
+                <% } %>
+
+                    <h2>Update a Field?
+                    </h2>
+                    <div class="update">
+
+                        <form action="/electronics/updatefield" method="post">
+                            <label for="">Current Fieldname</label>
+                            <input style="padding:10px" style="background-color:white;" list="items" name="name"
+                                placeholder="Select the Field Name to Delete">
+                            <datalist id="items">
+                                <% for(var i=0;i<fields.length;i++){%>
+                                    <% if(fields[i].name !=="Username" ){ %>
+                                        <option value="<%= fields[i].name %>">
+                                            <% } %>
+                                                <% } %>
+                            </datalist>
+                            <label for="">New Fieldname</label>
+                            <input type="text" name="newname" id="">
+                            <input type="submit" style="background: blue;" value="Update">
+                        </form>
+                    </div>
+    </div>
+
+
+
+</body>
+
+</html>
