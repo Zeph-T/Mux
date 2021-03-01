@@ -144,7 +144,7 @@
                 <label for="fname" style="margin-right: 30px;">
                     <%= field.name %>
                 </label>
-                <input type="<%=field.type %>" name="<%= field.name %>">
+                <input type="<%=field.type %>" name="<%= field.name %>" required >
                 <br>
                 <% }) %>
                     <% if(fields.length!==0) {%>
@@ -156,10 +156,10 @@
             <form action="/toys/newfield" method="post"
                 style="margin-bottom: 30px;background: gold;padding:30px;border-radius: 4px;border:3px solid black">
                 <label style="font-size: 30px;" for="">Field Name</label>
-                <input style="font-size: 20px;background-color:white;color:black" type="text" name="name"
+                <input style="font-size: 20px;background-color:white;color:black" required type="text" name="name"
                     placeholder="Enter the name of your new Custom Field">
                 <label for="">Field Type</label>
-                <input style="background-color: white; color:black" list="browsers" name="type"
+                <input style="background-color: white; color:black" list="browsers" required name="type"
                     placeholder="Select the Type">
                 <datalist id="browsers">
                     <option value="button">
@@ -190,7 +190,7 @@
                     method="post">
                     <label style="background-color: none;" for="">Enter The Name of the Field you want to delete</label>
                     <input style="padding:10px" style="background-color:white;" list="items" name="name"
-                        placeholder="Select the Field Name to Delete">
+                     required   placeholder="Select the Field Name to Delete" >
                     <datalist id="items">
                         <% for(var i=0;i<fields.length;i++){%>
                             <% if(fields[i].name !=="Username" ){ %>
@@ -212,7 +212,7 @@
                         <form action="/toys/updatefield" method="post">
                             <label for="">Current Fieldname</label>
                             <input style="padding:10px" style="background-color:white;" list="items" name="name"
-                                placeholder="Select the Field Name to Delete">
+                                placeholder="Select the Field Name to Delete" required>
                             <datalist id="items">
                                 <% for(var i=0;i<fields.length;i++){%>
                                     <% if(fields[i].name !=="Username" ){ %>
@@ -221,7 +221,7 @@
                                                 <% } %>
                             </datalist>
                             <label for="">New Fieldname</label>
-                            <input type="text" name="newname" id="">
+                            <input type="text" name="newname" id="" required>
                             <input type="submit" style="background: blue;" value="Update">
                         </form>
                     </div>
