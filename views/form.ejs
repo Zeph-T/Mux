@@ -2,8 +2,10 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <title>Electronics</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <title><%=topicname %></title>
     <style>
         input,
         select {
@@ -30,9 +32,9 @@
 
         input[type=submit] {
             width: 25vw;
-            background: darkblue;
             text-align: center;
             align-items: center;
+            background: darkblue;
         }
 
         input[type=submit]:hover {
@@ -78,7 +80,7 @@
             display: block;
             text-decoration: none;
             color: white;
-            background: gray;
+            background: #333;
             padding: 10px;
             width: 100px;
             border: solid 1px black;
@@ -105,30 +107,27 @@
             display: block;
         }
 
-        .update {
+        .update{
             background-color: aqua;
-            border: 4px solid black;
+            border:4px solid black;
             border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 60px;
+            padding:20px;
+            margin: bottom 60px;
         }
-
-        p:hover {
+        p:hover{
             opacity: 0.7;
         }
     </style>
 </head>
 
 <body>
+
     <a href="https://github.com/Zeph-T/Mux"> <i class="fa fa-github fa-3x"> Github Repository </i> </a>
-    <marquee>Since this is just a Working Model , I haven't used any frontend-Framwork. The only Tech I used for frontend is EJS templating Engine       NOTE:Added an extra functionality to update the User Information.
+    <marquee>Since this is just a Working Model , I haven't used any frontend-Framwork. The only Tech I used for frontend is EJS templating Engine        NOTE:Added an extra functionality to update the User Information.
     </marquee>
-    <a style="color:white;" href="/electronicusers">
-        <p style="background-color: rosybrown;padding:20px;font-size: 20px;color:honeydew"> Press to Get
-            all the
-            Registered Users </p>
-    </a>
-    <h1 style="margin-bottom: 70px; text-align: center;font-size: 100px;">ELECTRONICS</h1>
+    <a style="color:white;" href="/users/<%=topic%>">  <p style="background-color: rosybrown;padding:20px;font-size: 20px;color:honeydew"> Press to Get all the
+            Registered Users </p> </a>
+    <h1 style="margin-bottom: 70px; text-align: center;font-size: 100px;"><%=topicname %></h1>
 
 
 
@@ -140,12 +139,12 @@
                 <li> <a href="/electronics">Electronics </a></li>
             </div>
         </div>
-        <form action="/electronics" method="post">
+        <form action="/users/<%=topic%>" method="post">
             <%fields.forEach((field)=>{ %>
                 <label for="fname" style="margin-right: 30px;">
                     <%= field.name %>
                 </label>
-                <input type="<%=field.type %>" name="<%= field.name %>" required>
+                <input type="<%=field.type %>" name="<%= field.name %>" required >
                 <br>
                 <% }) %>
                     <% if(fields.length!==0) {%>
@@ -154,14 +153,14 @@
         </form>
         <h2>Add a New Field?</h3>
 
-            <form action="/electronics/newfield" method="post"
+            <form action="/<%=topic%>/newfield" method="post"
                 style="margin-bottom: 30px;background: gold;padding:30px;border-radius: 4px;border:3px solid black">
                 <label style="font-size: 30px;" for="">Field Name</label>
-                <input style="font-size: 20px;background-color:white;color:black" type="text" name="name"
-                    placeholder="Enter the name of your new Custom Field" required>
+                <input style="font-size: 20px;background-color:white;color:black" required type="text" name="name"
+                    placeholder="Enter the name of your new Custom Field">
                 <label for="">Field Type</label>
-                <input style="background-color: white; color:black" list="browsers" name="type"
-                    placeholder="Select the Type" required>
+                <input style="background-color: white; color:black" list="browsers" required name="type"
+                    placeholder="Select the Type">
                 <datalist id="browsers">
                     <option value="button">
                     <option value="checkbox">
@@ -186,12 +185,12 @@
             </form>
             <% if(fields.length !==0){ %>
                 <h2>Delete a Field?</h2>
-                <form action="/electronics/delete"
+                <form action="/<%=topic%>/delete"
                     style="margin-bottom: 100px;background-color:peru; padding:20px;border:4px solid black;border-radius: 4px;"
                     method="post">
                     <label style="background-color: none;" for="">Enter The Name of the Field you want to delete</label>
                     <input style="padding:10px" style="background-color:white;" list="items" name="name"
-                        placeholder="Select the Field Name to Delete" required>
+                     required   placeholder="Select the Field Name to Delete" >
                     <datalist id="items">
                         <% for(var i=0;i<fields.length;i++){%>
                             <% if(fields[i].name !=="Username" ){ %>
@@ -206,12 +205,11 @@
                 </form>
 
                 <% } %>
-
-                    <h2>Update a Field?
-                    </h2>
+                <h2>Update a Field?
+                </h2>
                     <div class="update">
 
-                        <form action="/electronics/updatefield" method="post">
+                        <form action="/<%=topic%>/updatefield" method="post">
                             <label for="">Current Fieldname</label>
                             <input style="padding:10px" style="background-color:white;" list="items" name="name"
                                 placeholder="Select the Field Name to Delete" required>
@@ -234,3 +232,4 @@
 </body>
 
 </html>
+
